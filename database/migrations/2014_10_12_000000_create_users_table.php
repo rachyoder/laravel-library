@@ -17,9 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->bigInteger('card_num')->nullable();
             $table->string('password');
-            $table->boolean('librarian')->default(false);
             $table->timestamps();
         });
     }
