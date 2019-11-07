@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use Illuminate\Http\Request;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 
 class BooksController extends Controller
 {
@@ -25,7 +27,7 @@ class BooksController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.add');
     }
 
     /**
@@ -34,9 +36,15 @@ class BooksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store( Request $request )
     {
-        //
+        $title = $request['title'] ? 'intitle:'.$request['title'] : '';
+        $author = $request['author'] ? '+inauthor:'.$request['author'] : '';
+        $client = new Client(['base_uri' => 'https://www.googleapis.com/books/v1/volumes']);
+        $response = $client->get('?q='.$title.$author.'&key=AIzaSyCk71MSlsoFy0KsanlLwoNmmlGNgq8ASsI');
+        $books = json_decode($response->getBody()->getContents())->items;
+        //dd($books);
+        return view('books.add', ['books' => $books]);
     }
 
     /**
@@ -82,5 +90,17 @@ class BooksController extends Controller
     public function destroy(Books $books)
     {
         //
+    }
+
+    public function addBook (Request $request)
+    {
+        $books = ($request->request->all());
+        foreach($books['booksList'] as $book){
+            $newBook = Book::create([
+                'title' => $books['title-'.$book],
+                'author' => $books['author-'.$book]
+            ]);
+        }
+        return view('books.index', ['books' => $books]);
     }
 }

@@ -29,8 +29,15 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card">
+                    <div class="card-header text-center">
+                        @if( Auth::User()->isLibrarian )
+                        <a href="books/add">Add More Books</a>
+                        @else
+                        Books Catalog
+                        @endif
+                    </div>
                     <div class="card-body">
-                        <table class="table text-center">
+                        <table class="table table-hover text-center">
                             <thead>
                                 <tr>
                                     <th scope="col">Title</th>
