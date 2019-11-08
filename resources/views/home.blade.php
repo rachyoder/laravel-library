@@ -18,7 +18,7 @@
                         <tbody>
                             @foreach($checked_books as $checked_book)
                             <tr>
-                                <td>{{ $checked_book->user_id }}</td>
+                                <td>{{ $checked_book->book->title }}</td>
                             </tr>
                             @endforeach
                         </tbody>

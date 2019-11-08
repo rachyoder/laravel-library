@@ -11,6 +11,8 @@ class Book extends Model
         'author'
     ];
 
-
+    public function checkout() {
+        return $this->hasOne('App\Checkout', 'book_id');   
+    }
 }
 
