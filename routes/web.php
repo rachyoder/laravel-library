@@ -11,6 +11,20 @@
 |
 */
 
+use App\Http\Controllers\BooksController;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'CheckoutController@index');
+Route::post('/home/checkout', 'CheckoutController@store');
+
+Route::get('/books', 'BooksController@index');
+Route::post('/books', 'BooksController@store');
+Route::get('/books/add', 'BooksController@create');
+Route::post('/books/add', 'BooksController@addBook');
+Route::post('/books/delete', 'BooksController@destroy');
