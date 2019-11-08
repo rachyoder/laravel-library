@@ -17,8 +17,6 @@ class CreateCheckoutsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('book_id');
             $table->bigInteger('user_id');
-            $table->dateTime('date_out');
-            $table->dateTime('due_date');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Checkout;
+use DB;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
@@ -14,7 +15,8 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        //
+        $checked_books = Checkout::all();
+        return view('home', ['checked_books' => $checked_books]);
     }
 
     /**
@@ -35,7 +37,12 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $checked_book = $request->request->all();
+        $checked_out = Checkout::create([
+            "book_id" => $checked_book['book_id'],
+            "user_id" => $checked_book['user_id']
+        ]);
+        
     }
 
     /**

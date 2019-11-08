@@ -13,8 +13,17 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    @isset($checked_books)
+                    <table class="table">
+                        <tbody>
+                            @foreach($checked_books as $checked_book)
+                            <tr>
+                                <td>{{ $checked_book->user_id }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @endisset
                 </div>
             </div>
         </div>

@@ -13,4 +13,9 @@ class Checkout extends Model
     public function cardholder() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    protected $fillable = [
+        'book_id',
+        'user_id'
+    ];
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use DB;
 use Illuminate\Http\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -43,7 +44,6 @@ class BooksController extends Controller
         $client = new Client(['base_uri' => 'https://www.googleapis.com/books/v1/volumes']);
         $response = $client->get('?q='.$title.$author.'&key=AIzaSyCk71MSlsoFy0KsanlLwoNmmlGNgq8ASsI');
         $books = json_decode($response->getBody()->getContents())->items;
-        //dd($books);
         return view('books.add', ['books' => $books]);
     }
 
@@ -87,20 +87,24 @@ class BooksController extends Controller
      * @param  \App\Books  $books
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Books $books)
+    public function destroy(Request $request)
     {
-        //
+        // die('hello');
+        DB::table('books')->where('title', '=', $request->book)->delete();
+        $books = DB::table('books')->get();
+        return view('books.index', ['books' => $books]);
     }
 
-    public function addBook (Request $request)
+    public function addBook(Request $request)
     {
-        $books = ($request->request->all());
-        foreach($books['booksList'] as $book){
-            $newBook = Book::create([
-                'title' => $books['title-'.$book],
-                'author' => $books['author-'.$book]
+        $book_id = ($request->request->all());
+        foreach($book_id['booksList'] as $book){
+            $book = Book::create([
+                'title' => $book_id['title-'.$book],
+                'author' => $book_id['author-'.$book]
             ]);
         }
+        $books = DB::table('books')->get();
         return view('books.index', ['books' => $books]);
     }
 }
