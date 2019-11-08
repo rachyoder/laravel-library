@@ -8,7 +8,9 @@ class Book extends Model
 {
     protected $fillable = [
         'title',
-        'author'
+        'author',
+        'checked_time',
+        'due_date'
     ];
 
     public function checkout() {

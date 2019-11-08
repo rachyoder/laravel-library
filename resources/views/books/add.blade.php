@@ -62,8 +62,6 @@ $author = "Ghost Writer";
 
                                                     @if(count($book->volumeInfo->authors))
                                                         {{ $author = $book->volumeInfo->authors[0]}}
-                                                    @else 
-                                                        'Ghost Writer'
                                                     @endif
 
                                                 @endif

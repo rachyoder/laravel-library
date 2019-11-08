@@ -16,6 +16,8 @@ class Checkout extends Model
 
     protected $fillable = [
         'book_id',
-        'user_id'
+        'user_id',
+        'checked_time',
+        'due_date'
     ];
 }
